@@ -1,0 +1,63 @@
+{
+  "version": "7.0",
+  "screens": [
+    {
+      "id": "SUPPORT_FORM",
+      "title": "Support Request",
+      "terminal": true,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "support_form",
+            "children": [
+              {
+                "type": "TextInput",
+                "name": "name",
+                "label": "Full name",
+                "required": true,
+                "input-type": "text"
+              },
+              {
+                "type": "TextInput",
+                "name": "email",
+                "label": "Email",
+                "required": true,
+                "input-type": "email"
+              },
+              {
+                "type": "TextInput",
+                "name": "subject",
+                "label": "Subject",
+                "required": true,
+                "input-type": "text"
+              },
+              {
+                "type": "TextArea",
+                "name": "message",
+                "label": "How can we help?",
+                "required": true
+              },
+              {
+                "type": "Footer",
+                "label": "Submit",
+                "on-click-action": {
+                  "name": "complete",
+                  "payload": {
+                    "flow_key": "support",
+                    "name": "${form.name}",
+                    "email": "${form.email}",
+                    "subject": "${form.subject}",
+                    "message": "${form.message}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

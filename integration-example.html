@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow24.ai - PBMP Chatbot Integration Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f8fafc;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e40af;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .code-block {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .note {
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .note strong {
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Grow24.ai - PBMP Chatbot Integration</h1>
+        
+        <p>This is an example page showing how to integrate the PBMP Chatbot widget into your website.</p>
+        
+        <div class="note">
+            <strong>Note:</strong> Replace <code>https://your-backend-url.com/api/chat</code> with your actual backend API URL.
+        </div>
+        
+        <h2>Integration Code</h2>
+        <p>Add this code before the closing <code>&lt;/body&gt;</code> tag in your HTML:</p>
+        
+        <div class="code-block">
+            <code>
+&lt;!-- PBMP Chatbot Widget --&gt;<br>
+&lt;link rel="stylesheet" href="/pbmp-chatbot/pbmp-chat-widget.css"&gt;<br>
+&lt;script <br>
+&nbsp;&nbsp;src="/pbmp-chatbot/pbmp-chat-widget.js"<br>
+&nbsp;&nbsp;data-pbmp-chat<br>
+&nbsp;&nbsp;data-api-endpoint="https://your-backend-url.com/api/chat"<br>
+&nbsp;&nbsp;data-position="bottom-right"&gt;<br>
+&lt;/script&gt;
+            </code>
+        </div>
+        
+        <h2>Configuration Options</h2>
+        <ul>
+            <li><strong>data-api-endpoint</strong>: Your backend API URL (required)</li>
+            <li><strong>data-position</strong>: Widget position - "bottom-right" or "bottom-left" (optional, default: "bottom-right")</li>
+        </ul>
+        
+        <h2>Manual Initialization</h2>
+        <p>If you prefer manual initialization:</p>
+        
+        <div class="code-block">
+            <code>
+&lt;script src="/pbmp-chatbot/pbmp-chat-widget.js"&gt;&lt;/script&gt;<br>
+&lt;script&gt;<br>
+&nbsp;&nbsp;window.addEventListener('DOMContentLoaded', function() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;window.initPBMPChatWidget({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apiEndpoint: 'https://your-backend-url.com/api/chat',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position: 'bottom-right'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;});<br>
+&lt;/script&gt;
+            </code>
+        </div>
+        
+        <p>The chatbot widget should appear in the bottom-right corner of this page once properly configured.</p>
+    </div>
+    
+    <!-- PBMP Chatbot Widget Integration -->
+    <!-- 
+    Uncomment and configure the following lines to enable the widget:
+    
+    <link rel="stylesheet" href="/pbmp-chatbot/pbmp-chat-widget.css">
+    <script 
+      src="/pbmp-chatbot/pbmp-chat-widget.js"
+      data-pbmp-chat
+      data-api-endpoint="https://your-backend-url.com/api/chat"
+      data-position="bottom-right">
+    </script>
+    -->
+</body>
+</html>

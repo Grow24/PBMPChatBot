@@ -1,0 +1,29 @@
+{
+  "name": "pbmp-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "load-docs": "node loadDocs.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@datastax/astra-db-ts": "^2.1.2",
+    "@google/generative-ai": "^0.24.1",
+    "@langchain/core": "^1.1.13",
+    "@langchain/google-genai": "^2.1.8",
+    "@langchain/textsplitters": "^1.0.1",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "langchain": "^1.2.8",
+    "nodemailer": "^7.0.12"
+  }
+}

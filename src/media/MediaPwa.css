@@ -1,0 +1,131 @@
+.media-pwa-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px 32px;
+  color: #e2e8f0;
+  background:
+    radial-gradient(circle at 50% 20%, #1e3a5f 0%, transparent 45%),
+    linear-gradient(180deg, #0b1220 0%, #020617 100%);
+}
+
+html.media-pwa,
+html.media-pwa body,
+html.media-pwa #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #020617;
+  display: block;
+  overflow: auto;
+}
+
+.media-pwa-card {
+  width: min(460px, 100%);
+  text-align: center;
+}
+
+.media-pwa-kicker {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #93c5fd;
+  margin: 0 0 8px;
+}
+
+.media-pwa-title {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.media-pwa-note {
+  margin: 0 auto 28px;
+  max-width: 38ch;
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.media-preview {
+  width: 100%;
+  max-width: 320px;
+  max-height: 240px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin: 0 auto 16px;
+  display: block;
+  border: 1px solid rgba(147, 197, 253, 0.2);
+}
+
+.media-status {
+  min-height: 40px;
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.media-meta {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.media-error {
+  color: #fca5a5;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+
+.media-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.media-actions button,
+.media-actions label {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+}
+
+.media-actions .primary {
+  color: #0b1220;
+  background: #93c5fd;
+}
+
+.media-actions .secondary {
+  color: #0b1220;
+  background: #86efac;
+}
+
+.media-actions .ghost {
+  color: #cbd5e1;
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.media-actions input[type="file"] {
+  display: none;
+}
+
+.media-result-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #93c5fd;
+  font-size: 13px;
+  text-decoration: underline;
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PBMP — Book a Meeting</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #059669;
+      --accent-dark: #047857;
+      --border: #e2e8f0;
+      --danger: #dc2626;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(5, 150, 105, 0.18), transparent 40%),
+        linear-gradient(160deg, #ecfdf5 0%, #f8fafc 45%, #e2e8f0 100%);
+      color: var(--text);
+      padding: 24px 16px;
+    }
+    .wrap {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .brand {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 8px;
+      font-family: system-ui, sans-serif;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+    .sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+    label {
+      display: block;
+      margin: 0 0 6px;
+      font-family: system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+    input, textarea, select {
+      width: 100%;
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: 15px/1.4 system-ui, sans-serif;
+      background: #fff;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid rgba(5, 150, 105, 0.35);
+      border-color: var(--accent);
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      background: var(--accent);
+      color: #fff;
+      font: 600 15px/1 system-ui, sans-serif;
+      cursor: pointer;
+    }
+    button:hover { background: var(--accent-dark); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .msg {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+    }
+    .msg.ok { display: block; background: #ecfdf5; color: #065f46; }
+    .msg.err { display: block; background: #fef2f2; color: var(--danger); }
+    .foot {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Grow24 · PBMP</div>
+    <h1>Book a meeting</h1>
+    <p class="sub">Share a few details and our team will get back to you. This form is linked from WhatsApp menu option 3.</p>
+
+    <form id="bookingForm">
+      <label for="name">Full name</label>
+      <input id="name" name="name" required placeholder="Your name" />
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required placeholder="you@company.com" />
+
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" required placeholder="91XXXXXXXXXX" />
+
+      <label for="title">Title / role</label>
+      <input id="title" name="title" placeholder="Founder, Manager, ..." />
+
+      <label for="notes">What would you like to discuss?</label>
+      <textarea id="notes" name="notes" rows="4" placeholder="Tell us briefly..."></textarea>
+
+      <button type="submit" id="submitBtn">Submit request</button>
+      <div id="msg" class="msg"></div>
+    </form>
+
+    <p class="foot">Data is sent to PBMP leads API · Grow24.ai</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const msg = document.getElementById('msg');
+    const submitBtn = document.getElementById('submitBtn');
+    const apiBase = window.location.origin;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.className = 'msg';
+      msg.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        title: form.title.value.trim(),
+        notes: form.notes.value.trim(),
+        source: 'whatsapp_web_form',
+        channel: 'whatsapp_form'
+      };
+
+      try {
+        const res = await fetch(apiBase + '/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || 'Submit failed');
+        }
+        msg.className = 'msg ok';
+        msg.textContent = 'Thanks! Your request was submitted. Our team will contact you soon.';
+        form.reset();
+      } catch (err) {
+        msg.className = 'msg err';
+        msg.textContent = err.message || 'Something went wrong. Please try again.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit request';
+      }
+    });
+  </script>
+</body>
+</html>

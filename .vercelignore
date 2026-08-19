@@ -1,0 +1,28 @@
+# Backend folder - deployed separately on Zeabur
+pbmp-backend/
+pbmp-backend/**
+
+# Documentation files (not needed for frontend deployment)
+knowledge-base-flow.md
+workflow.md
+whatsapp_integration.md
+
+# Development and configuration files
+*.md
+.git/
+.gitignore
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files (use Vercel environment variables instead)
+.env
+.env.local
+.env.*.local

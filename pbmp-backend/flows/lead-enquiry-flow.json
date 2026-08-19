@@ -1,0 +1,68 @@
+{
+  "version": "7.0",
+  "data_api_version": "3.0",
+  "routing_model": {
+    "LEAD_ENQUIRY": []
+  },
+  "screens": [
+    {
+      "id": "LEAD_ENQUIRY",
+      "title": "Lead Enquiry",
+      "terminal": true,
+      "success": true,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "lead_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "Tell us about your requirement"
+              },
+              {
+                "type": "TextBody",
+                "text": "Fill this form inside WhatsApp. No browser needed."
+              },
+              {
+                "type": "TextInput",
+                "name": "name",
+                "label": "Name",
+                "required": true,
+                "input-type": "text"
+              },
+              {
+                "type": "TextInput",
+                "name": "company",
+                "label": "Company",
+                "required": true,
+                "input-type": "text"
+              },
+              {
+                "type": "TextArea",
+                "name": "requirement",
+                "label": "Requirement",
+                "required": true
+              },
+              {
+                "type": "Footer",
+                "label": "Submit",
+                "on-click-action": {
+                  "name": "complete",
+                  "payload": {
+                    "flow_key": "lead",
+                    "name": "${form.name}",
+                    "company": "${form.company}",
+                    "requirement": "${form.requirement}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

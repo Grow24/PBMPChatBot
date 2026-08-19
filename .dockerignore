@@ -1,0 +1,8 @@
+node_modules
+dist
+.git
+.env
+.env.*
+pbmp-backend/node_modules
+pbmp-backend/voice-inbox
+*.md

@@ -1,0 +1,173 @@
+PBMP Knowledge Base Starter Pack (Website RAG + Internal RAG)
+Compiled from this chat • Version v1.0 • Date: 14 Jan 2026
+
+1. Purpose and Scope
+This document consolidates the data produced in this chat into a structured starter knowledge base (KB) for training and operating the PBMP RAG chatbots:
+• Website Chatbot (public, low-hallucination)
+• Internal Chatbot (can be expanded to customer data with permissions)
+
+
+2. Non-Negotiable Rules and Conventions (PBMP Doctrine)
+2.1 Management meaning (canonical)
+Management = Goals → Strategy → Plan → Execute (Projects) → Operate, with Change Management pervasive.
+Avoid naming like "Planning & Management" (planning is a subset of management).
+
+2.2 Naming rules (strict)
+Use noun-based names for solutions/processes/artifacts (e.g., "Customer Segmentation", "Market Sizing", "Pipeline Governance").
+Avoid "/" in names. If needed, split into parent-child (e.g., "Industry Analysis" → child "Competitive Analysis").
+Prefer single responsibility naming: one concept per node.
+
+2.3 Strategy lifecycle (canonical sequence)
+Strategic Analysis → Strategy Formulation (includes Strategic Choices) → Strategy Implementation & Control.
+Do not use "Strategic Choices" as a separate stage; it is part of Formulation.
+
+2.4 Content transformation rule (book screenshots)
+Near-verbatim paraphrase, sentence-by-sentence, preserving headings/sub-headings, ordering, and meaning.
+Use different wording.
+If a page is hard to read, intelligent guesses may be used and marked as assumptions.
+
+2.5 Wide table mandate (minimum fields)
+Questions (down to lowest level; include 5W1H).
+Techniques + algorithms/activities (BABOK tools mapped where relevant).
+Data needed + data sources (external + internal; anomalies as hints).
+How data combines (triangulation, joins, cohorts, segmentation).
+Visualizations (dashboards + layouts; which chart answers which question).
+Output artifacts + embedded outputs (metrics/insights inside artifacts).
+Response/actions (what decision or corrective action follows).
+
+2.6 Hyper-local and anomaly lens
+External scanning includes microeconomic and hyperlocal signals (city/region/cluster; where relevant even apartment-level).
+Questions should support anomaly detection: cumulative vs non-cumulative, WoW/MoM/QoQ/YoY, FYTD vs last year, seasonality, cohort comparisons, leading vs lagging indicators.
+
+3. Scope Model (Areas and Stages)
+3.1 Areas supported
+Corporate / Business (Enterprise).
+Functional: Marketing, Sales, Finance, HR, IT, Supply Chain.
+Enablers (SSP): Structure, Systems, Process.
+Program (cross-functional) examples: ESG, Business Transformation.
+
+3.2 Stages supported
+Goals
+Objectives
+Strategy and Tactics
+Plan
+Execute (Projects)
+Operate (Operations)
+Change Management overlays all stages
+
+4. Unified Measurement and Cascade Model (GOST + OGSM + OKR/KPI)
+4.1 Definitions (strict)
+Goal (G): SMART (metric + baseline + target + time + scope).
+Objective (O): measurable sub-outcome that causally drives the goal.
+Strategy (S): coherent choices (where-to-play/how-to-win; capability bets; trade-offs).
+Tactics (T): concrete initiatives/actions/projects.
+
+4.2 Cascade rule (key)
+G/O/S/T are relative to hierarchy level. A Strategy at Board level can become a Goal or Objective at CXO/Department level.
+
+4.3 Cascade levels required
+Board → CXO → Department → Individual
+
+4.4 Latest table index (from prior thread)
+Use these table IDs as references in future threads:
+T-01 Unified Cascading Table (Board → CXO → Department → Individual)
+T-02 Corporate Strategy Template (PBMP)
+T-03 Corporate → Functional Cascade Mapping Table
+T-04 Enabler Strategies (SSP) Template (Structure / Systems / Process)
+T-05 Universal Plan Template
+T-06 Strategy → Plan Types Mapping
+T-07 Standard Project Backbone
+T-08 Plan-Specific Projects
+T-09 Operations Coverage
+T-10 Stage Core Question Banks
+T-11 Area Delta Question Banks
+T-12 1-Paragraph Writeups for Area × Stage
+T-13 Solution Naming and Hierarchy (PBMP suites)
+T-14 External benchmark anchors (Anaplan-style market naming)
+
+5. External Environment Analysis (A1) — Canonical Hierarchy
+A1 External Environment Analysis
+A1.1 Macro-Environmental (PESTLE+): Political; Economic (macro + micro + hyperlocal); Social/Demographic; Technological; Legal/Regulatory; Environmental/Sustainability
+A1.2 Industry and Ecosystem Context
+A1.3 Market and Demand Environment
+A1.4 Geographic and Hyper-local Context
+A1.5 Cross-environment signals and anomalies
+
+6. PBMP Knowledge Base Schema (Entities and Required Fields)
+6.1 Common base fields (apply to every entity)
+id (stable unique), type (Solution/Process/Template/Intent/Persona/GlossaryTerm/Evidence/Artifact/Media/FAQ)
+name, summary_1line, owner, status (Draft/Beta/GA/Deprecated), version, effective_date
+audience (Website/Internal/Both), visibility (Public/NDA/Confidential), role_tags, industry_tags, geo_tags
+confidence (Confirmed/ExampleOnly/Assumption), source_refs (Evidence IDs), related_ids (typed links)
+
+7. Website Bot Prompt Contract (Anti-hallucination)
+7.1 Grounding rules
+State product facts only if supported by retrieved KB items with audience=Website, visibility=Public, status=GA, confidence=Confirmed.
+If insufficient evidence: ask up to 3 clarifying questions OR offer safe CTAs (demo/contact/brochure) OR say you do not have that information yet.
+Do not invent, do not guess, do not fill missing data.
+Major claims must include provenance (KB item IDs).
+
+7.2 Intent processing
+Produce canonical Formal English intent for every message.
+Map to an Intent ID; if uncertain, offer top 2-3 options and ask user to choose.
+Produce intent JSON per schema; if required slots missing, ask for them; if JSON cannot be produced, ask user to re-prompt.
+
+7.3 Retrieval policy
+Retrieve per intent retrieval_targets; filter to Website/Public/GA by default.
+Retrieve multiple types when relevant: Solution + FAQ + Evidence; optionally Process/Template public descriptions.
+If factual query and Evidence hits < 1: abstain or ask clarifying questions.
+
+8. Unified Measurement Framework
+PBMP uses a unified GOST + OGSM + OKR/KPI framework that cascades from Board level to Individual contributors.
+
+8.1 Core Principles
+- Goals are SMART: Specific, Measurable, Achievable, Relevant, Time-bound
+- Objectives are measurable sub-outcomes that causally drive goals
+- Strategies are coherent choices (where-to-play, how-to-win, capability bets, trade-offs)
+- Tactics are concrete initiatives, actions, and projects
+
+8.2 Cascade Hierarchy
+Board Level → CXO Level → Department Level → Individual Level
+Each level's Strategy can become a Goal or Objective at the next level down.
+
+8.3 Management Lifecycle
+Goals → Objectives → Strategy & Tactics → Plan → Execute (Projects) → Operate (Operations)
+Change Management overlays all stages.
+
+9. PBMP Areas of Coverage
+9.1 Corporate/Business (Enterprise Level)
+Strategic planning, portfolio management, corporate governance, M&A, capital allocation
+
+9.2 Functional Areas
+- Marketing: demand generation, brand, customer lifecycle
+- Sales: pipeline management, forecasting, territory planning
+- Finance: budgeting, forecasting, financial planning & analysis
+- HR: workforce planning, talent management, compensation
+- IT: systems architecture, project portfolio, vendor management
+- Supply Chain: demand planning, inventory optimization, logistics
+
+9.3 Enablers (Structure, Systems, Process)
+Organization design, system selection and integration, process optimization and governance
+
+9.4 Cross-functional Programs
+ESG (Environmental, Social, Governance), Business Transformation, Digital Transformation
+
+10. Key PBMP Capabilities
+
+10.1 Strategic Analysis
+External environment scanning (PESTLE+), industry analysis, market sizing, competitive positioning, hyperlocal and anomaly detection
+
+10.2 Strategy Formulation
+Goal cascading, strategic choices, capability planning, resource allocation, scenario planning
+
+10.3 Planning
+Strategic plans, operational plans, project plans, financial plans, resource plans
+
+10.4 Execution
+Project management, program management, portfolio management, agile/waterfall methodologies
+
+10.5 Operations
+KPI tracking, dashboard design, anomaly detection, control loops, corrective actions
+
+10.6 Change Management
+Stakeholder management, communication planning, training and adoption, resistance management

@@ -1,0 +1,70 @@
+﻿Sr,Status,Area,Functionality,Purpose,Where to run / test,Procedure (what you do) — step by step,Where the response appears,Expected response / pass,If it fails — what to check,Why pending,Blocker owner,How to fix — step by step
+P1,PENDING,Pending / blocked,In-chat WhatsApp Flow Publish (menu 3 native form),Menu 3 shows Open Form; the form opens inside WhatsApp; submit sends details + success + CRM.,See How to fix — step by step,"1) business.facebook.com → Security Centre / Business verification — wait for Approved.
+2) WhatsApp Manager → WAPI WABA (the one with 9370239600, not the test WABA) → Account tools → Flows → pbmp_lead_enquiry.
+3) Check JSON: pbmp-backend/flows/lead-enquiry-flow.json screen LEAD_ENQUIRY.
+4) Preview/Test to your number (Draft is allowed).
+5) Publish after Approved.
+6) Keep Flow ID in Zeabur WHATSAPP_LEAD_FLOW_ID (currently 1683299722773369).
+7) Set WHATSAPP_FLOW_MODE=published and redeploy.
+8) Email WAPI: enable interactive type flow.",WhatsApp: 3 → Open Form → submit. Or POST /whatsapp/test-flow flowKind=lead. Browser-link fallback should not appear.,WhatsApp: 3 → Open Form → submit. Or POST /whatsapp/test-flow flowKind=lead. Browser-link fallback should not appear.,Menu 3 HTML booking/support links. Flow Builder Preview/Test.,Meta business verification is In review. Draft Flows are not sent to customers. Publish requires verification and high message quality.,Meta (DATASCIENCE TECHNOLOGIES Pvt Ltd verification) + you (WABA Flows),"1) business.facebook.com → Security Centre / Business verification — wait for Approved.
+2) WhatsApp Manager → WAPI WABA (the one with 9370239600, not the test WABA) → Account tools → Flows → pbmp_lead_enquiry.
+3) Check JSON: pbmp-backend/flows/lead-enquiry-flow.json screen LEAD_ENQUIRY.
+4) Preview/Test to your number (Draft is allowed).
+5) Publish after Approved.
+6) Keep Flow ID in Zeabur WHATSAPP_LEAD_FLOW_ID (currently 1683299722773369).
+7) Set WHATSAPP_FLOW_MODE=published and redeploy.
+8) Email WAPI: enable interactive type flow."
+P2,PENDING,Pending / blocked,WAPI native reply buttons / list menu,The menu shows 3 native buttons / a list picker.,See How to fix — step by step,"1) Email admin@wapi.in.net / 9310465591: enable send-interactive-message for buttons, list, flow, catalog.
+2) Confirm their path/payload.
+3) Update Zeabur WAPI_SEND_INTERACTIVE_PATH if the path differs.
+4) Redeploy.
+5) Optional experiment: META_GRAPH_INTERACTIVE_FALLBACK=true — this sends from the Meta TEST number, not production 9370239600.","Send menu — WhatsApp buttons appear, not only numbered text.","Send menu — WhatsApp buttons appear, not only numbered text.",The numbered text menu is already complete — the UX still works.,WAPI path contact/send-interactive-message returns 404 on this account. The code uses text fallback plus a 30-minute cooldown.,WAPI.in.net support,"1) Email admin@wapi.in.net / 9310465591: enable send-interactive-message for buttons, list, flow, catalog.
+2) Confirm their path/payload.
+3) Update Zeabur WAPI_SEND_INTERACTIVE_PATH if the path differs.
+4) Redeploy.
+5) Optional experiment: META_GRAPH_INTERACTIVE_FALLBACK=true — this sends from the Meta TEST number, not production 9370239600."
+P3,PENDING,Pending / blocked,Meta Commerce catalogue product cards,Menu 7 shows WhatsApp product cards / a catalog thumbnail.,See How to fix — step by step,"1) business.facebook.com/commerce → Create catalogue.
+2) Add products + retailer IDs (sku-…).
+3) Link the catalogue to the WABA.
+4) Zeabur: WHATSAPP_CATALOGUE_ID=… and WHATSAPP_CATALOGUE_PRODUCT_IDS=sku-1,sku-2
+5) Redeploy.
+6) Ask WAPI to enable catalog_message / product_list.",Send 7 — cards appear. Or POST /whatsapp/catalogue/send. /whatsapp/catalogue/status commerceReady true.,Send 7 — cards appear. Or POST /whatsapp/catalogue/send. /whatsapp/catalogue/status commerceReady true.,Menu 7 text catalogue (Grow24/PBMP list) is already live.,WHATSAPP_CATALOGUE_ID is not set. The Commerce catalogue is not linked to the WABA. WAPI catalog_message may also 404 on interactive.,You (Commerce Manager) + WAPI (catalog send),"1) business.facebook.com/commerce → Create catalogue.
+2) Add products + retailer IDs (sku-…).
+3) Link the catalogue to the WABA.
+4) Zeabur: WHATSAPP_CATALOGUE_ID=… and WHATSAPP_CATALOGUE_PRODUCT_IDS=sku-1,sku-2
+5) Redeploy.
+6) Ask WAPI to enable catalog_message / product_list."
+P4,PENDING,Pending / blocked,WhatsApp Calling true pickup (VoIP answer + audio),The user calls in WhatsApp; the business picks up; audio works.,See How to fix — step by step,"1) Turn Call settings ON for the test number (Allow voice calls).
+2) Test call → verify reject + follow-up (this phase is done).
+3) Next: a WebRTC server (or Meta SIP) that returns an SDP answer.
+4) On webhook connect: pre_accept + accept.
+5) Production calling needs a separate migration plan — do not remove 9370239600 from WAPI.","Call the test number and get connect + audio. /calling/status events show ACCEPTED, not only reject.","Call the test number and get connect + audio. /calling/status events show ACCEPTED, not only reject.",Menu 5 click-to-call + callback. Inbound auto-reject + missed-call WhatsApp message.,Accept/pre_accept needs a WebRTC SDP media server. Inbound calls are auto-rejected with a chat follow-up. WAPI does not expose Calling. Do not move the production number onto the Meta App.,Engineering (WebRTC/SIP) + Meta Call settings on the test number,"1) Turn Call settings ON for the test number (Allow voice calls).
+2) Test call → verify reject + follow-up (this phase is done).
+3) Next: a WebRTC server (or Meta SIP) that returns an SDP answer.
+4) On webhook connect: pre_accept + accept.
+5) Production calling needs a separate migration plan — do not remove 9370239600 from WAPI."
+P5,PENDING,Pending / blocked,AutoVoice always-listening on the phone,"An answer without tapping Automate Start, using the wake phrase.",See How to fix — step by step,"1) Play Store AutoVoice (Joãoapps). Mic + notifications.
+2) Always listening ON. Filter ask pbmp.
+3) Duplicate the Automate flow: remove Speech, add Plug-in event AutoVoice.
+4) HTTP action=autovoice sendWhatsApp 0.
+5) Start the flow. Say ask pbmp what is PBMP.",The phone speaks the answer. Automate log shows HTTP 200.,The phone speaks the answer. Automate log shows HTTP 200.,Existing Pbmp voice ask (tap Start → speak) is already complete.,The API is complete. You still need to install AutoVoice and start the Automate Plug-in flow. AutoVoice Pro is optional/paid.,You (Android phone),"1) Play Store AutoVoice (Joãoapps). Mic + notifications.
+2) Always listening ON. Filter ask pbmp.
+3) Duplicate the Automate flow: remove Speech, add Plug-in event AutoVoice.
+4) HTTP action=autovoice sendWhatsApp 0.
+5) Start the flow. Say ask pbmp what is PBMP."
+P6,PENDING,Pending / blocked,Business verification Approved,Flow Publish and extra Cloud API features.,See How to fix — step by step,"1) Business settings → check verification status.
+2) If Rejected, upload the documents Meta asks for (GST/CIN/address).
+3) After Approved: P1 Publish + optional Meta App Publish.",Verification badge Verified. Flow Publish button enabled.,Verification badge Verified. Flow Publish button enabled.,Draft Flow Preview; HTML forms; WAPI messaging unchanged.,Meta review is In review (days). Flow Publish and some Calling/catalogue production limits wait on this.,Meta review team — keep documents complete; do not spam resubmit,"1) Business settings → check verification status.
+2) If Rejected, upload the documents Meta asks for (GST/CIN/address).
+3) After Approved: P1 Publish + optional Meta App Publish."
+P7,PENDING,Pending / blocked,WhatsApp message templates (proactive outside 24h),First message outside the 24h window via template.,See How to fix — step by step,"1) Meta / WAPI dashboard → create template (e.g. pbmp_welcome) → submit.
+2) Status APPROVED.
+3) Sync in WAPI.
+4) Zeabur WAPI_DEFAULT_TEMPLATE_NAME=pbmp_welcome
+5) POST /whatsapp/test-template",test-template 200 + template message on WhatsApp.,test-template 200 + template message on WhatsApp.,"If the user messages first (24h window), free-form replies already work.",The send path is live but needs a Meta-approved template name synced in WAPI. Without approval the API returns 422.,You (Meta templates) + WAPI sync,"1) Meta / WAPI dashboard → create template (e.g. pbmp_welcome) → submit.
+2) Status APPROVED.
+3) Sync in WAPI.
+4) Zeabur WAPI_DEFAULT_TEMPLATE_NAME=pbmp_welcome
+5) POST /whatsapp/test-template"
+P8,PENDING,Pending / blocked,Multi-agent inbox assignment,Multiple agents assigned to separate chats.,See How to fix — step by step,"Later phase: agent users, assign, claim. For now one human queue + agent-reply is enough.",N/A for now,N/A for now,Menu 4 handoff + POST /whatsapp/agent-reply.,"WAPI team inbox is not the PBMP API. We have a single handoff flag + agent-reply API, not an agent roster.",Product decision + later CRM/WAPI inbox,"Later phase: agent users, assign, claim. For now one human queue + agent-reply is enough."
+P9,PENDING,Pending / blocked,Do not move production 9370239600 onto the Meta App,Stable production bot.,See How to fix — step by step,Run Calling/Flow experiments on test number +1 555 196 5746. Keep production on WAPI until there is a migration plan.,WAPI dashboard outbound + messages on the phone from 9370239600.,WAPI dashboard outbound + messages on the phone from 9370239600.,Keep the current architecture: WhatsApp → WAPI → PBMP.,"This is a constraint, not a missing feature. Adding the number in Meta App Step 2 can break WAPI messaging.",You / ops,Run Calling/Flow experiments on test number +1 555 196 5746. Keep production on WAPI until there is a migration plan.

@@ -1,0 +1,69 @@
+{
+  "version": "7.0",
+  "screens": [
+    {
+      "id": "BOOKING_FORM",
+      "title": "Book a Meeting",
+      "terminal": true,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "booking_form",
+            "children": [
+              {
+                "type": "TextInput",
+                "name": "name",
+                "label": "Full name",
+                "required": true,
+                "input-type": "text"
+              },
+              {
+                "type": "TextInput",
+                "name": "email",
+                "label": "Email",
+                "required": true,
+                "input-type": "email"
+              },
+              {
+                "type": "TextInput",
+                "name": "phone",
+                "label": "Phone",
+                "required": true,
+                "input-type": "phone"
+              },
+              {
+                "type": "TextInput",
+                "name": "title",
+                "label": "Title / role",
+                "input-type": "text"
+              },
+              {
+                "type": "TextArea",
+                "name": "notes",
+                "label": "What would you like to discuss?"
+              },
+              {
+                "type": "Footer",
+                "label": "Submit",
+                "on-click-action": {
+                  "name": "complete",
+                  "payload": {
+                    "flow_key": "booking",
+                    "name": "${form.name}",
+                    "email": "${form.email}",
+                    "phone": "${form.phone}",
+                    "title": "${form.title}",
+                    "notes": "${form.notes}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

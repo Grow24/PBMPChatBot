@@ -1,0 +1,16 @@
+{
+  "image1": { "mediaType": "image", "extensions": [".jpg", ".jpeg", ".png", ".webp"] },
+  "image2": { "mediaType": "image", "extensions": [".jpg", ".jpeg", ".png", ".webp"] },
+  "image3": { "mediaType": "image", "extensions": [".jpg", ".jpeg", ".png", ".webp"] },
+  "video1": { "mediaType": "video", "extensions": [".mp4", ".mov", ".webm", ".m4v"] },
+  "video2": { "mediaType": "video", "extensions": [".mp4", ".mov", ".webm", ".m4v"] },
+  "video3": { "mediaType": "video", "extensions": [".mp4", ".mov", ".webm", ".m4v"] },
+  "audio1": { "mediaType": "audio", "extensions": [".mp3", ".ogg", ".m4a", ".aac", ".wav"] },
+  "audio2": { "mediaType": "audio", "extensions": [".mp3", ".ogg", ".m4a", ".aac", ".wav"] },
+  "3d_image1": { "mediaType": "document", "extensions": [".glb", ".gltf", ".usdz", ".zip", ".pdf"] },
+  "3d_image2": { "mediaType": "document", "extensions": [".glb", ".gltf", ".usdz", ".zip", ".pdf"] },
+  "animated_image1": { "mediaType": "video", "extensions": [".mp4", ".gif", ".webp"] },
+  "animated_image2": { "mediaType": "video", "extensions": [".mp4", ".gif", ".webp"] },
+  "gif1": { "mediaType": "video", "extensions": [".mp4", ".gif", ".webp"] },
+  "gif2": { "mediaType": "video", "extensions": [".mp4", ".gif", ".webp"] }
+}

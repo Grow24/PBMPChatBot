@@ -1,0 +1,17 @@
+# Optional Zeabur service for the Hey PBMP PWA (repo root).
+# Backend stays on the existing pbmp-backend service.
+FROM node:20-bookworm-slim AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+ARG VITE_API_ENDPOINT=https://pbmpchatbotbackend.zeabur.app/api/chat
+ARG VITE_VOICE_ENDPOINT=https://pbmpchatbotbackend.zeabur.app/api/voice/hello-world
+ENV VITE_API_ENDPOINT=$VITE_API_ENDPOINT
+ENV VITE_VOICE_ENDPOINT=$VITE_VOICE_ENDPOINT
+RUN npx vite build
+
+FROM caddy:2-alpine
+COPY Caddyfile.pwa /etc/caddy/Caddyfile
+COPY --from=build /app/dist /usr/share/caddy
+EXPOSE 8080

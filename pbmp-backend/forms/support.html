@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PBMP — Support Form</title>
+  <style>
+    :root {
+      --accent: #0369a1;
+      --accent-dark: #075985;
+      --border: #e2e8f0;
+      --muted: #64748b;
+      --danger: #dc2626;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(160deg, #e0f2fe 0%, #f8fafc 50%, #e2e8f0 100%);
+      padding: 24px 16px;
+      color: #0f172a;
+    }
+    .wrap { max-width: 520px; margin: 0 auto; }
+    .brand {
+      font: 600 13px/1.2 system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 8px;
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    .sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    form {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+    label {
+      display: block;
+      margin: 0 0 6px;
+      font: 600 13px/1.2 system-ui, sans-serif;
+      color: #334155;
+    }
+    input, textarea, select {
+      width: 100%;
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: 15px/1.4 system-ui, sans-serif;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      background: var(--accent);
+      color: #fff;
+      font: 600 15px/1 system-ui, sans-serif;
+      cursor: pointer;
+    }
+    button:hover { background: var(--accent-dark); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .msg { display: none; margin-top: 16px; padding: 12px 14px; border-radius: 10px; font: 14px/1.4 system-ui, sans-serif; }
+    .msg.ok { display: block; background: #f0f9ff; color: #075985; }
+    .msg.err { display: block; background: #fef2f2; color: var(--danger); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Grow24 · PBMP Support</div>
+    <h1>Support request</h1>
+    <p class="sub">Tell us what you need help with. Linked from WhatsApp form menu.</p>
+
+    <form id="supportForm">
+      <label for="name">Name</label>
+      <input id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required />
+
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" required />
+
+      <label for="topic">Topic</label>
+      <select id="topic" name="topic">
+        <option value="general">General question</option>
+        <option value="product">Product / PBMP</option>
+        <option value="billing">Billing</option>
+        <option value="technical">Technical issue</option>
+      </select>
+
+      <label for="notes">Message</label>
+      <textarea id="notes" name="notes" rows="4" required placeholder="Describe your request..."></textarea>
+
+      <button type="submit" id="submitBtn">Send support request</button>
+      <div id="msg" class="msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('supportForm');
+    const msg = document.getElementById('msg');
+    const submitBtn = document.getElementById('submitBtn');
+    const apiBase = window.location.origin;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.className = 'msg';
+      msg.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        title: form.topic.value,
+        notes: form.notes.value.trim(),
+        source: 'whatsapp_support_form',
+        channel: 'whatsapp_form'
+      };
+
+      try {
+        const res = await fetch(apiBase + '/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || 'Submit failed');
+        }
+        msg.className = 'msg ok';
+        msg.textContent = 'Thanks! Your support request was submitted.';
+        form.reset();
+      } catch (err) {
+        msg.className = 'msg err';
+        msg.textContent = err.message || 'Something went wrong.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send support request';
+      }
+    });
+  </script>
+</body>
+</html>
