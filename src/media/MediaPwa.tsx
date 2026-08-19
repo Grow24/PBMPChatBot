@@ -8,7 +8,7 @@ type CameraMode = 'photo' | 'video';
 export default function MediaPwa() {
   const [state, setState] = useState<UploadState>('idle');
   const [cameraMode, setCameraMode] = useState<CameraMode>('photo');
-  const [statusText, setStatusText] = useState('Camera se photo lo ya video record karo.');
+  const [statusText, setStatusText] = useState('Take a photo with camera or record a video.');
   const [preview, setPreview] = useState<string | null>(null);
   const [previewType, setPreviewType] = useState<'image' | 'video' | null>(null);
   const [lastId, setLastId] = useState('');
@@ -42,7 +42,7 @@ export default function MediaPwa() {
     setError('');
     setCameraMode(mode);
     setState('camera');
-    setStatusText(mode === 'photo' ? 'Camera ready — Capture button dabao.' : 'Camera ready — Record button dabao.');
+    setStatusText(mode === 'photo' ? 'Camera ready — tap Capture.' : 'Camera ready — tap Start recording.');
     setPreview(null);
     setPreviewType(null);
     setLastId('');
@@ -61,7 +61,7 @@ export default function MediaPwa() {
       }
     } catch (err) {
       setState('error');
-      setError('Camera access denied or not available. File picker se try karo.');
+      setError('Camera access denied or unavailable. Please use the file picker.');
     }
   }
 
@@ -80,7 +80,7 @@ export default function MediaPwa() {
       if (!blob) return;
       stopStream();
       setState('uploading');
-      setStatusText('Photo upload ho rahi hai…');
+      setStatusText('Uploading photo...');
       const url = URL.createObjectURL(blob);
       setPreview(url);
       setPreviewType('image');
@@ -88,7 +88,7 @@ export default function MediaPwa() {
       try {
         const result = await uploadMedia({ file: blob, mimeType: 'image/jpeg', caption: 'camera-photo' });
         setState('done');
-        setStatusText(result.message || 'PBMP ko photo mil gayi!');
+        setStatusText(result.message || 'PBMP received your photo.');
         setLastId(result.id || '');
         if (result.downloadUrl) {
           const base = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000/api/chat';
@@ -98,7 +98,7 @@ export default function MediaPwa() {
       } catch (err) {
         setState('error');
         setError(err instanceof Error ? err.message : 'Upload failed');
-        setStatusText('Upload nahi ho saka.');
+        setStatusText('Upload failed.');
       }
     }, 'image/jpeg', 0.92);
   }, []);
@@ -123,7 +123,7 @@ export default function MediaPwa() {
       const blob = new Blob(chunksRef.current, { type: mimeType });
       stopStream();
       setState('uploading');
-      setStatusText('Video upload ho rahi hai…');
+      setStatusText('Uploading video...');
       const url = URL.createObjectURL(blob);
       setPreview(url);
       setPreviewType('video');
@@ -131,7 +131,7 @@ export default function MediaPwa() {
       try {
         const result = await uploadMedia({ file: blob, mimeType, caption: 'camera-video' });
         setState('done');
-        setStatusText(result.message || 'PBMP ko video mil gayi!');
+        setStatusText(result.message || 'PBMP received your video.');
         setLastId(result.id || '');
         if (result.downloadUrl) {
           const base = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000/api/chat';
@@ -141,13 +141,13 @@ export default function MediaPwa() {
       } catch (err) {
         setState('error');
         setError(err instanceof Error ? err.message : 'Upload failed');
-        setStatusText('Upload nahi ho saka.');
+        setStatusText('Upload failed.');
       }
     };
 
     recorder.start();
     setState('recording');
-    setStatusText('Recording… Stop button dabao.');
+    setStatusText('Recording... Tap Stop & Upload when done.');
   }, []);
 
   const stopVideoRecord = useCallback(() => {
@@ -165,7 +165,7 @@ export default function MediaPwa() {
     const isImage = file.type.startsWith('image/');
     const isVideo = file.type.startsWith('video/');
     if (!isImage && !isVideo) {
-      setError('Sirf image ya video files supported hain.');
+      setError('Only image or video files are supported.');
       return;
     }
 
@@ -173,12 +173,12 @@ export default function MediaPwa() {
     setPreview(url);
     setPreviewType(isImage ? 'image' : 'video');
     setState('uploading');
-    setStatusText(`${isImage ? 'Image' : 'Video'} upload ho rahi hai…`);
+    setStatusText(`Uploading ${isImage ? 'image' : 'video'}...`);
 
     try {
       const result = await uploadMedia({ file, mimeType: file.type, caption: file.name });
       setState('done');
-      setStatusText(result.message || 'PBMP ko media mil gayi!');
+      setStatusText(result.message || 'PBMP received your media.');
       setLastId(result.id || '');
       if (result.downloadUrl) {
         const base = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000/api/chat';
@@ -188,7 +188,7 @@ export default function MediaPwa() {
     } catch (err) {
       setState('error');
       setError(err instanceof Error ? err.message : 'Upload failed');
-      setStatusText('Upload nahi ho saka.');
+      setStatusText('Upload failed.');
     }
   }, []);
 
@@ -196,7 +196,7 @@ export default function MediaPwa() {
     stopStream();
     recorderRef.current = null;
     setState('idle');
-    setStatusText('Camera se photo lo ya video record karo.');
+    setStatusText('Take a photo with camera or record a video.');
     setPreview(null);
     setPreviewType(null);
     setLastId('');
@@ -251,7 +251,7 @@ export default function MediaPwa() {
                 🎥 Record Video
               </button>
               <label className="ghost">
-                📁 Gallery se choose karo
+                📁 Choose from gallery
                 <input ref={fileInputRef} type="file" accept="image/*,video/*" onChange={handleFileChange} />
               </label>
             </>
@@ -293,7 +293,7 @@ export default function MediaPwa() {
           {/* Done or error */}
           {(state === 'done' || state === 'error') && (
             <button className="ghost" type="button" onClick={reset}>
-              Naya capture karo
+              Start new capture
             </button>
           )}
         </div>

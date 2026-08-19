@@ -130,7 +130,7 @@ Duplicate the flow on your phone:
 | `PBMP Voice Ask` | `0` — phone speaks only |
 | `PBMP Voice + WhatsApp` | `1` — phone speaks + WhatsApp to `AUTOMATE_DEFAULT_PHONE` |
 
-**Important:** Automate expression mode mein `true`/`false` mat likho — `1` / `0` use karo. Backend dono samajhta hai.
+**Important:** In Automate expression mode, do not use `true`/`false` — use `1` / `0`. The backend accepts both formats.
 
 ---
 
