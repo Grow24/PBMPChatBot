@@ -27,6 +27,9 @@ const VIDEO_MIME = new Set([
   'video/quicktime',
   'video/3gpp',
   'video/x-matroska',
+  'video/matroska',
+  'video/avi',
+  'video/x-msvideo',
 ]);
 
 const ALL_MIME = new Set([...IMAGE_MIME, ...VIDEO_MIME]);
@@ -76,7 +79,8 @@ function extensionForMime(mimeType) {
   if (base === 'video/webm') return 'webm';
   if (base === 'video/quicktime') return 'mov';
   if (base === 'video/3gpp') return '3gp';
-  if (base === 'video/x-matroska') return 'mkv';
+  if (base === 'video/x-matroska' || base === 'video/matroska') return 'mkv';
+  if (base === 'video/avi' || base === 'video/x-msvideo') return 'avi';
   return 'bin';
 }
 
@@ -97,7 +101,7 @@ function stripDataUrl(value) {
 }
 
 function isSafeMediaFilename(value) {
-  return /^pm_[0-9]+_[a-f0-9]+\.(jpg|jpeg|png|webp|gif|heic|mp4|webm|mov|3gp|mkv)$/i.test(String(value || ''));
+  return /^pm_[0-9]+_[a-f0-9]+\.(jpg|jpeg|png|webp|gif|heic|mp4|webm|mov|3gp|mkv|avi)$/i.test(String(value || ''));
 }
 
 function listInboxFiles() {
