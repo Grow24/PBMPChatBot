@@ -42,7 +42,7 @@ export default function MediaPwa() {
     setError('');
     setCameraMode(mode);
     setState('camera');
-    setStatusText(mode === 'photo' ? 'Camera ready — tap Capture.' : 'Camera ready — tap Start recording.');
+    setStatusText('Opening camera...');
     setPreview(null);
     setPreviewType(null);
     setLastId('');
@@ -50,18 +50,28 @@ export default function MediaPwa() {
 
     try {
       stopStream();
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-        audio: mode === 'video',
-      });
+      // Try rear camera first (mobile), fall back to any available camera (laptop)
+      let stream: MediaStream | null = null;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: 'environment' } },
+          audio: mode === 'video',
+        });
+      } catch {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: mode === 'video',
+        });
+      }
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         await videoRef.current.play();
       }
+      setStatusText(mode === 'photo' ? 'Camera ready — tap Capture.' : 'Camera ready — tap Start recording.');
     } catch (err) {
       setState('error');
-      setError('Camera access denied or unavailable. Please use the file picker.');
+      setError('Camera access denied or unavailable. Please use the file picker instead.');
     }
   }
 
