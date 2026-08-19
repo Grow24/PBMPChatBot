@@ -9,7 +9,7 @@ const INBOX_DIR = process.env.MEDIA_INBOX_DIR
   ? path.resolve(process.env.MEDIA_INBOX_DIR)
   : path.join(__dirname, 'media-inbox');
 const MAX_IMAGE_BYTES = Number(process.env.MEDIA_MAX_IMAGE_BYTES || 20 * 1024 * 1024);
-const MAX_VIDEO_BYTES = Number(process.env.MEDIA_MAX_VIDEO_BYTES || 50 * 1024 * 1024);
+const MAX_VIDEO_BYTES = Number(process.env.MEDIA_MAX_VIDEO_BYTES || 150 * 1024 * 1024);
 const MAX_KEEP = Number(process.env.MEDIA_INBOX_KEEP || 30);
 
 const IMAGE_MIME = new Set([
