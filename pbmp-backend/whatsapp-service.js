@@ -514,7 +514,7 @@ async function notifyHandoffEvent(eventType, phoneNumber, payload = {}) {
         }
     }
 
-    if (WHATSAPP_HANDOFF_NOTIFY_EMAIL && process.env.SENDGRID_API_KEY) {
+    if (WHATSAPP_HANDOFF_NOTIFY_EMAIL) {
         try {
             const emailUrl = (process.env.PBMP_EMAIL_URL
                 || PBMP_API_URL.replace(/\/api\/chat\/?$/, '/api/send-email'));
